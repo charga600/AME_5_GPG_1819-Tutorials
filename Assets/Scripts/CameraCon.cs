@@ -1,26 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using UnityEngine.UI;
 using UnityEngine;
 
 public class CameraCon : MonoBehaviour
 {
-    public Behaviour camFov;
+    public Behaviour JumpBehav;
+    public Behaviour SpawnBehav;
+    public Behaviour TurretBehav;
 
-    float driveCD = 10;
-    float count;
+    bool lastJumpActive;
 
     void Update()
     {
-        if(count < 0)
+        if(Input.GetKeyDown(KeyCode.Space) && TurretBehav.isActiveAndEnabled == false)
         {
-            count -= Time.deltaTime;
+            JumpBehav.enabled = true;
         }
 
-        if(Input.GetKeyDown(KeyCode.Space) && count <= 0)
+        if(lastJumpActive != JumpBehav.isActiveAndEnabled && lastJumpActive)
         {
-            count = driveCD;
-            camFov.enabled = true;
+            SpawnBehav.enabled = true;
+            TurretBehav.enabled = true;
         }
+
+        lastJumpActive = JumpBehav.isActiveAndEnabled;
     }
 }
